@@ -39,6 +39,8 @@ Constraints:
 1 <= s.length <= 15
 s contains only the characters ('I', 'V', 'X', 'L', 'C', 'D', 'M').
 It is guaranteed that s is a valid roman numeral in the range [1, 3999].
+
+pytest -q 13_Roman_to_Integer.py
 '''
 
 import pytest
@@ -46,7 +48,20 @@ import pytest
 
 class Solution:
     def romanToInt(self, s: str) -> int:
-        return 3
+        # if s == "III":
+        #     return I+I+I
+        # elif s == "LVIII":
+        #     return L+V+I+I+I
+        # elif s == "MCMXCIV":
+        #     return M+CM+XC+IV
+
+        romans = {'I': 1, 'IV': 4, 'V': 5, 'IX': 9, 'X': 10, 'XL': 40, 'L': 50,
+                  'XC': 90, 'C': 100, 'CD': 400, 'D': 500, 'CM': 900, 'M': 1000}
+
+        sum = 0
+        for l in s:
+            sum += romans[l]
+        return sum
 
 
 class Tests:
@@ -54,7 +69,11 @@ class Tests:
         assert Solution().romanToInt('III') == 3
 
     def test_lviii(self):
-        assert Solution().romanToInt('LVIII') == 50
+        assert Solution().romanToInt('LVIII') == 58
 
     def test_mcmxciv(self):
-        assert Solution().romanToInt('LVIII') == 1994
+        assert Solution().romanToInt('MCMXCIV') == 1994
+
+
+if __name__ == "__main__":
+    Solution().romanToInt('III')
